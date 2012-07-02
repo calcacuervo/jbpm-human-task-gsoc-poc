@@ -1,0 +1,24 @@
+import org.drools.process.core.datatype.impl.type.StringDataType;
+[
+  // the Notification work item
+  [
+    "name" : "OperationCommand",
+    "parameters" : [
+        "status" :  new StringDataType(),
+        "previousStatus" :  new StringDataType(),
+        "allowed" :  new StringDataType(),
+        "newStatus" :  new StringDataType(),
+        "setNewOwnerToUser" :  new StringDataType(),
+        "setNewOwnerToNull" :  new StringDataType(),
+        "setToPreviousStatus" :  new StringDataType(),
+        "userIsExplicitPotentialOwner" :  new StringDataType(),
+        "addTargetUserToPotentialOwners" :  new StringDataType(),
+        "removeUserFromPotentialOwners" :  new StringDataType(),
+        "skippable" :  new StringDataType(),
+        "exec" :  new StringDataType()
+    ],
+    "displayName" : "OperationCommand",
+    "icon" : "icons/notification.gif"
+  ]
+
+]

@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.jboss.org/drools"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_taskItem" structureRef="Object" />
+  <itemDefinition id="_eventContentItem" structureRef="Object" />
+
+  <process processType="Private" isExecutable="true" id="taskProcess" name="Task Process" tns:packageName="org.jbpm" >
+
+    <!-- process variables -->
+    <property id="task" itemSubjectRef="_taskItem"/>
+    <property id="eventContent" itemSubjectRef="_eventContentItem"/>
+
+    <!-- nodes -->
+    <startEvent id="_1" name="StartProcess" />
+    <intermediateCatchEvent id="_2" name="Signal3" >
+      <dataOutput id="_2_Output" name="event" />
+      <dataOutputAssociation>
+      <sourceRef>_2_Output</sourceRef>
+      <targetRef>eventContent</targetRef>
+      </dataOutputAssociation>
+      <outputSet>
+        <dataOutputRefs>_2_Output</dataOutputRefs>
+      </outputSet>
+      <signalEventDefinition signalRef="StartTaskEvent"/>
+    </intermediateCatchEvent>
+    <intermediateCatchEvent id="_4" name="Signal4" >
+      <dataOutput id="_4_Output" name="event" />
+      <dataOutputAssociation>
+      <sourceRef>_4_Output</sourceRef>
+      <targetRef>eventContent</targetRef>
+      </dataOutputAssociation>
+      <outputSet>
+        <dataOutputRefs>_4_Output</dataOutputRefs>
+      </outputSet>
+      <signalEventDefinition signalRef="CompleteEvent"/>
+    </intermediateCatchEvent>
+    <endEvent id="_6" name="End" >
+        <terminateEventDefinition/>
+    </endEvent>
+    <task id="_7" name="Started" tns:taskName="OperationCommand" >
+      <ioSpecification>
+        <dataInput id="_7_taskInput" name="task" />
+        <dataInput id="_7_taskEventInput" name="taskEvent" />
+        <dataInput id="_7_skippableInput" name="skippable" />
+        <dataInput id="_7_newStatusInput" name="newStatus" />
+        <dataInput id="_7_allowedInput" name="allowed" />
+        <dataInput id="_7_removeUserFromPotentialOwnersInput" name="removeUserFromPotentialOwners" />
+        <dataInput id="_7_setNewOwnerToUserInput" name="setNewOwnerToUser" />
+        <dataInput id="_7_statusInput" name="status" />
+        <dataInput id="_7_setNewOwnerToNullInput" name="setNewOwnerToNull" />
+        <dataInput id="_7_setToPreviousStatusInput" name="setToPreviousStatus" />
+        <dataInput id="_7_previousStatusInput" name="previousStatus" />
+        <dataInput id="_7_userIsExplicitPotentialOwnerInput" name="userIsExplicitPotentialOwner" />
+        <dataInput id="_7_execInput" name="exec" />
+        <dataInput id="_7_addTargetUserToPotentialOwnersInput" name="addTargetUserToPotentialOwners" />
+        <inputSet>
+          <dataInputRefs>_7_taskInput</dataInputRefs>
+          <dataInputRefs>_7_taskEventInput</dataInputRefs>
+          <dataInputRefs>_7_skippableInput</dataInputRefs>
+          <dataInputRefs>_7_newStatusInput</dataInputRefs>
+          <dataInputRefs>_7_allowedInput</dataInputRefs>
+          <dataInputRefs>_7_removeUserFromPotentialOwnersInput</dataInputRefs>
+          <dataInputRefs>_7_setNewOwnerToUserInput</dataInputRefs>
+          <dataInputRefs>_7_statusInput</dataInputRefs>
+          <dataInputRefs>_7_setNewOwnerToNullInput</dataInputRefs>
+          <dataInputRefs>_7_setToPreviousStatusInput</dataInputRefs>
+          <dataInputRefs>_7_previousStatusInput</dataInputRefs>
+          <dataInputRefs>_7_userIsExplicitPotentialOwnerInput</dataInputRefs>
+          <dataInputRefs>_7_execInput</dataInputRefs>
+          <dataInputRefs>_7_addTargetUserToPotentialOwnersInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <sourceRef>task</sourceRef>
+        <targetRef>_7_taskInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <sourceRef>eventContent</sourceRef>
+        <targetRef>_7_taskEventInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_skippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_7_skippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_newStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">InProgress</from>
+          <to xsi:type="tFormalExpression">_7_newStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_allowedInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">PotentialOwner</from>
+          <to xsi:type="tFormalExpression">_7_allowedInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_removeUserFromPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_7_removeUserFromPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_setNewOwnerToUserInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_7_setNewOwnerToUserInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_statusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Ready</from>
+          <to xsi:type="tFormalExpression">_7_statusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_setNewOwnerToNullInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_7_setNewOwnerToNullInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_setToPreviousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_7_setToPreviousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_previousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Ready</from>
+          <to xsi:type="tFormalExpression">_7_previousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_userIsExplicitPotentialOwnerInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_7_userIsExplicitPotentialOwnerInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_execInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Start</from>
+          <to xsi:type="tFormalExpression">_7_execInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_7_addTargetUserToPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_7_addTargetUserToPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+    </task>
+    <task id="_8" name="Claimed" tns:taskName="OperationCommand" >
+      <ioSpecification>
+        <dataInput id="_8_taskInput" name="task" />
+        <dataInput id="_8_taskEventInput" name="taskEvent" />
+        <dataInput id="_8_allowedInput" name="allowed" />
+        <dataInput id="_8_newStatusInput" name="newStatus" />
+        <dataInput id="_8_skippableInput" name="skippable" />
+        <dataInput id="_8_setNewOwnerToUserInput" name="setNewOwnerToUser" />
+        <dataInput id="_8_removeUserFromPotentialOwnersInput" name="removeUserFromPotentialOwners" />
+        <dataInput id="_8_statusInput" name="status" />
+        <dataInput id="_8_setNewOwnerToNullInput" name="setNewOwnerToNull" />
+        <dataInput id="_8_previousStatusInput" name="previousStatus" />
+        <dataInput id="_8_setToPreviousStatusInput" name="setToPreviousStatus" />
+        <dataInput id="_8_userIsExplicitPotentialOwnerInput" name="userIsExplicitPotentialOwner" />
+        <dataInput id="_8_execInput" name="exec" />
+        <dataInput id="_8_addTargetUserToPotentialOwnersInput" name="addTargetUserToPotentialOwners" />
+        <inputSet>
+          <dataInputRefs>_8_taskInput</dataInputRefs>
+          <dataInputRefs>_8_taskEventInput</dataInputRefs>
+          <dataInputRefs>_8_allowedInput</dataInputRefs>
+          <dataInputRefs>_8_newStatusInput</dataInputRefs>
+          <dataInputRefs>_8_skippableInput</dataInputRefs>
+          <dataInputRefs>_8_setNewOwnerToUserInput</dataInputRefs>
+          <dataInputRefs>_8_removeUserFromPotentialOwnersInput</dataInputRefs>
+          <dataInputRefs>_8_statusInput</dataInputRefs>
+          <dataInputRefs>_8_setNewOwnerToNullInput</dataInputRefs>
+          <dataInputRefs>_8_previousStatusInput</dataInputRefs>
+          <dataInputRefs>_8_setToPreviousStatusInput</dataInputRefs>
+          <dataInputRefs>_8_userIsExplicitPotentialOwnerInput</dataInputRefs>
+          <dataInputRefs>_8_execInput</dataInputRefs>
+          <dataInputRefs>_8_addTargetUserToPotentialOwnersInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <sourceRef>task</sourceRef>
+        <targetRef>_8_taskInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <sourceRef>eventContent</sourceRef>
+        <targetRef>_8_taskEventInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_allowedInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">PotentialOwner,BusinessAdministrator</from>
+          <to xsi:type="tFormalExpression">_8_allowedInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_newStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Reserved</from>
+          <to xsi:type="tFormalExpression">_8_newStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_skippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_8_skippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_setNewOwnerToUserInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">1</from>
+          <to xsi:type="tFormalExpression">_8_setNewOwnerToUserInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_removeUserFromPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_8_removeUserFromPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_statusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Ready</from>
+          <to xsi:type="tFormalExpression">_8_statusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_setNewOwnerToNullInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_8_setNewOwnerToNullInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_previousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Ready</from>
+          <to xsi:type="tFormalExpression">_8_previousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_setToPreviousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_8_setToPreviousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_userIsExplicitPotentialOwnerInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_8_userIsExplicitPotentialOwnerInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_execInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Claim</from>
+          <to xsi:type="tFormalExpression">_8_execInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_8_addTargetUserToPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_8_addTargetUserToPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+    </task>
+    <intermediateCatchEvent id="_9" name="Signal1" >
+      <dataOutput id="_9_Output" name="event" />
+      <dataOutputAssociation>
+      <sourceRef>_9_Output</sourceRef>
+      <targetRef>eventContent</targetRef>
+      </dataOutputAssociation>
+      <outputSet>
+        <dataOutputRefs>_9_Output</dataOutputRefs>
+      </outputSet>
+      <signalEventDefinition signalRef="ClaimTaskEvent"/>
+    </intermediateCatchEvent>
+    <task id="_10" name="Completed" tns:taskName="OperationCommand" >
+      <ioSpecification>
+        <dataInput id="_10_newStatusInput" name="newStatus" />
+        <dataInput id="_10_allowedInput" name="allowed" />
+        <dataInput id="_10_skippableInput" name="skippable" />
+        <dataInput id="_10_removeUserFromPotentialOwnersInput" name="removeUserFromPotentialOwners" />
+        <dataInput id="_10_setNewOwnerToUserInput" name="setNewOwnerToUser" />
+        <dataInput id="_10_statusInput" name="status" />
+        <dataInput id="_10_setNewOwnerToNullInput" name="setNewOwnerToNull" />
+        <dataInput id="_10_setToPreviousStatusInput" name="setToPreviousStatus" />
+        <dataInput id="_10_previousStatusInput" name="previousStatus" />
+        <dataInput id="_10_userIsExplicitPotentialOwnerInput" name="userIsExplicitPotentialOwner" />
+        <dataInput id="_10_execInput" name="exec" />
+        <dataInput id="_10_addTargetUserToPotentialOwnersInput" name="addTargetUserToPotentialOwners" />
+        <dataOutput id="_10_taskOutput" name="task" />
+        <dataOutput id="_10_taskEventOutput" name="taskEvent" />
+        <inputSet>
+          <dataInputRefs>_10_newStatusInput</dataInputRefs>
+          <dataInputRefs>_10_allowedInput</dataInputRefs>
+          <dataInputRefs>_10_skippableInput</dataInputRefs>
+          <dataInputRefs>_10_removeUserFromPotentialOwnersInput</dataInputRefs>
+          <dataInputRefs>_10_setNewOwnerToUserInput</dataInputRefs>
+          <dataInputRefs>_10_statusInput</dataInputRefs>
+          <dataInputRefs>_10_setNewOwnerToNullInput</dataInputRefs>
+          <dataInputRefs>_10_setToPreviousStatusInput</dataInputRefs>
+          <dataInputRefs>_10_previousStatusInput</dataInputRefs>
+          <dataInputRefs>_10_userIsExplicitPotentialOwnerInput</dataInputRefs>
+          <dataInputRefs>_10_execInput</dataInputRefs>
+          <dataInputRefs>_10_addTargetUserToPotentialOwnersInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_10_taskOutput</dataOutputRefs>
+          <dataOutputRefs>_10_taskEventOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <targetRef>_10_newStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Completed</from>
+          <to xsi:type="tFormalExpression">_10_newStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_allowedInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Owner</from>
+          <to xsi:type="tFormalExpression">_10_allowedInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_skippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_10_skippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_removeUserFromPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_10_removeUserFromPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_setNewOwnerToUserInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_10_setNewOwnerToUserInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_statusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">InProgress</from>
+          <to xsi:type="tFormalExpression">_10_statusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_setNewOwnerToNullInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_10_setNewOwnerToNullInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_setToPreviousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_10_setToPreviousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_previousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">InProgress</from>
+          <to xsi:type="tFormalExpression">_10_previousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_userIsExplicitPotentialOwnerInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_10_userIsExplicitPotentialOwnerInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_execInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Complete</from>
+          <to xsi:type="tFormalExpression">_10_execInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_10_addTargetUserToPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_10_addTargetUserToPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_10_taskOutput</sourceRef>
+        <targetRef>task</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_10_taskEventOutput</sourceRef>
+        <targetRef>eventContent</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <task id="_11" name="Started" tns:taskName="OperationCommand" >
+      <ioSpecification>
+        <dataInput id="_11_taskInput" name="task" />
+        <dataInput id="_11_taskEventInput" name="taskEvent" />
+        <dataInput id="_11_newStatusInput" name="newStatus" />
+        <dataInput id="_11_allowedInput" name="allowed" />
+        <dataInput id="_11_skippableInput" name="skippable" />
+        <dataInput id="_11_removeUserFromPotentialOwnersInput" name="removeUserFromPotentialOwners" />
+        <dataInput id="_11_setNewOwnerToUserInput" name="setNewOwnerToUser" />
+        <dataInput id="_11_statusInput" name="status" />
+        <dataInput id="_11_setNewOwnerToNullInput" name="setNewOwnerToNull" />
+        <dataInput id="_11_setToPreviousStatusInput" name="setToPreviousStatus" />
+        <dataInput id="_11_previousStatusInput" name="previousStatus" />
+        <dataInput id="_11_userIsExplicitPotentialOwnerInput" name="userIsExplicitPotentialOwner" />
+        <dataInput id="_11_execInput" name="exec" />
+        <dataInput id="_11_addTargetUserToPotentialOwnersInput" name="addTargetUserToPotentialOwners" />
+        <inputSet>
+          <dataInputRefs>_11_taskInput</dataInputRefs>
+          <dataInputRefs>_11_taskEventInput</dataInputRefs>
+          <dataInputRefs>_11_newStatusInput</dataInputRefs>
+          <dataInputRefs>_11_allowedInput</dataInputRefs>
+          <dataInputRefs>_11_skippableInput</dataInputRefs>
+          <dataInputRefs>_11_removeUserFromPotentialOwnersInput</dataInputRefs>
+          <dataInputRefs>_11_setNewOwnerToUserInput</dataInputRefs>
+          <dataInputRefs>_11_statusInput</dataInputRefs>
+          <dataInputRefs>_11_setNewOwnerToNullInput</dataInputRefs>
+          <dataInputRefs>_11_setToPreviousStatusInput</dataInputRefs>
+          <dataInputRefs>_11_previousStatusInput</dataInputRefs>
+          <dataInputRefs>_11_userIsExplicitPotentialOwnerInput</dataInputRefs>
+          <dataInputRefs>_11_execInput</dataInputRefs>
+          <dataInputRefs>_11_addTargetUserToPotentialOwnersInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <sourceRef>task</sourceRef>
+        <targetRef>_11_taskInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <sourceRef>eventContent</sourceRef>
+        <targetRef>_11_taskEventInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_newStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">InProgress</from>
+          <to xsi:type="tFormalExpression">_11_newStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_allowedInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Owner</from>
+          <to xsi:type="tFormalExpression">_11_allowedInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_skippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_11_skippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_removeUserFromPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_11_removeUserFromPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_setNewOwnerToUserInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">1</from>
+          <to xsi:type="tFormalExpression">_11_setNewOwnerToUserInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_statusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Reserved</from>
+          <to xsi:type="tFormalExpression">_11_statusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_setNewOwnerToNullInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_11_setNewOwnerToNullInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_setToPreviousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_11_setToPreviousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_previousStatusInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Reserved</from>
+          <to xsi:type="tFormalExpression">_11_previousStatusInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_userIsExplicitPotentialOwnerInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_11_userIsExplicitPotentialOwnerInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_execInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Start</from>
+          <to xsi:type="tFormalExpression">_11_execInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_11_addTargetUserToPotentialOwnersInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">0</from>
+          <to xsi:type="tFormalExpression">_11_addTargetUserToPotentialOwnersInput</to>
+        </assignment>
+      </dataInputAssociation>
+    </task>
+    <parallelGateway id="_12" name="Gateway" gatewayDirection="Diverging" />
+    <intermediateCatchEvent id="_13" name="Signal2" >
+      <dataOutput id="_13_Output" name="event" />
+      <dataOutputAssociation>
+      <sourceRef>_13_Output</sourceRef>
+      <targetRef>eventContent</targetRef>
+      </dataOutputAssociation>
+      <outputSet>
+        <dataOutputRefs>_13_Output</dataOutputRefs>
+      </outputSet>
+      <signalEventDefinition signalRef="StartTaskEvent"/>
+    </intermediateCatchEvent>
+    <exclusiveGateway id="_14" name="Gateway" gatewayDirection="Converging" />
+
+    <!-- connections -->
+    <sequenceFlow id="_8-_2" sourceRef="_8" targetRef="_2" />
+    <sequenceFlow id="_14-_4" sourceRef="_14" targetRef="_4" />
+    <sequenceFlow id="_10-_6" sourceRef="_10" targetRef="_6" />
+    <sequenceFlow id="_2-_7" sourceRef="_2" targetRef="_7" />
+    <sequenceFlow id="_9-_8" sourceRef="_9" targetRef="_8" />
+    <sequenceFlow id="_12-_9" sourceRef="_12" targetRef="_9" />
+    <sequenceFlow id="_4-_10" sourceRef="_4" targetRef="_10" />
+    <sequenceFlow id="_13-_11" sourceRef="_13" targetRef="_11" />
+    <sequenceFlow id="_1-_12" sourceRef="_1" targetRef="_12" />
+    <sequenceFlow id="_12-_13" sourceRef="_12" targetRef="_13" />
+    <sequenceFlow id="_7-_14" sourceRef="_7" targetRef="_14" />
+    <sequenceFlow id="_11-_14" sourceRef="_11" targetRef="_14" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="taskProcess" >
+      <bpmndi:BPMNShape bpmnElement="_1" >
+        <dc:Bounds x="42" y="56" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_2" >
+        <dc:Bounds x="448" y="15" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_4" >
+        <dc:Bounds x="734" y="96" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_6" >
+        <dc:Bounds x="946" y="96" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_7" >
+        <dc:Bounds x="570" y="22" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_8" >
+        <dc:Bounds x="309" y="16" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_9" >
+        <dc:Bounds x="229" y="16" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_10" >
+        <dc:Bounds x="814" y="96" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_11" >
+        <dc:Bounds x="309" y="96" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_12" >
+        <dc:Bounds x="148" y="56" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_13" >
+        <dc:Bounds x="229" y="96" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_14" >
+        <dc:Bounds x="653" y="96" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_8-_2" >
+        <di:waypoint x="359" y="40" />
+        <di:waypoint x="472" y="39" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_14-_4" >
+        <di:waypoint x="677" y="120" />
+        <di:waypoint x="758" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10-_6" >
+        <di:waypoint x="864" y="120" />
+        <di:waypoint x="970" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_2-_7" >
+        <di:waypoint x="472" y="39" />
+        <di:waypoint x="620" y="46" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_9-_8" >
+        <di:waypoint x="253" y="40" />
+        <di:waypoint x="359" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_12-_9" >
+        <di:waypoint x="172" y="80" />
+        <di:waypoint x="253" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4-_10" >
+        <di:waypoint x="758" y="120" />
+        <di:waypoint x="864" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_13-_11" >
+        <di:waypoint x="253" y="120" />
+        <di:waypoint x="359" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_1-_12" >
+        <di:waypoint x="66" y="80" />
+        <di:waypoint x="172" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_12-_13" >
+        <di:waypoint x="172" y="80" />
+        <di:waypoint x="253" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7-_14" >
+        <di:waypoint x="620" y="46" />
+        <di:waypoint x="677" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11-_14" >
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="677" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

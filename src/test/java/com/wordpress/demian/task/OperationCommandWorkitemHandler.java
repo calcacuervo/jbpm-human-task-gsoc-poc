@@ -81,7 +81,7 @@ public class OperationCommandWorkitemHandler implements WorkItemHandler {
 		List<OperationCommand> commands = new ArrayList<OperationCommand>();
 		commands.add(command);
 		this.session.taskOperation(commands, command.getExec(), task.getId(),
-				taskEvent.getUserId(), null, taskEvent.getData(), null);
+				taskEvent.getUserId(), taskEvent.getUserId(), taskEvent.getData(), null);
 		wim.completeWorkItem(wi.getId(), null);
 	}
 

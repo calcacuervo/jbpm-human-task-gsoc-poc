@@ -7,10 +7,13 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import junit.framework.Assert;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
@@ -21,11 +24,14 @@ import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.io.impl.ClassPathResource;
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.process.ProcessInstance;
 import org.jbpm.task.Group;
+import org.jbpm.task.Status;
 import org.jbpm.task.Task;
 import org.jbpm.task.User;
+import org.jbpm.task.identity.UserGroupCallback;
+import org.jbpm.task.identity.UserGroupCallbackManager;
 import org.jbpm.task.service.TaskService;
+import org.jbpm.task.service.TaskServiceSession;
 import org.junit.Test;
 
 import com.wordpress.demian.task.OperationCommandWorkitemHandler;
@@ -50,25 +56,55 @@ public class LifeCycleNonPersistedTest {
 		vars.put("now", new Date());
 
 		// One potential owner, should go straight to state Reserved
-		String str = "(with (new Task()) { priority = 55, taskData = (with( new TaskData()) { } ), ";
-		str += "peopleAssignments = (with ( new PeopleAssignments() ) { potentialOwners = [users['bobba' ], users['darth'] ], }),";
+		String str = "(with (new Task()) { priority = 55, taskData = (with( new TaskData()) { status = Status.Ready } ), ";
+		str += "peopleAssignments = (with ( new PeopleAssignments() ) { potentialOwners = [users['bobba' ], users['darth'] ], businessAdministrators = [users['Administrator' ], users['darth'] ]}),";
 		str += "names = [ new I18NText( 'en-UK', 'This is my task name')] })";
 
 		Task task = (Task) eval(new StringReader(str), vars);
+//		task.getPeopleAssignments().set
 		EntityManagerFactory emfTask = Persistence.createEntityManagerFactory("org.jbpm.task");
 		TaskService taskService = new TaskService(emfTask,
 				SystemEventListenerFactory.getSystemEventListener());
-		TaskServiceUtil util = new TaskServiceUtil(taskService,  taskService.createSession().getTaskPersistenceManager());
+		TaskServiceSession tsession = taskService.createSession();
+		UserGroupCallbackManager.getInstance().setCallback(new UserGroupCallback() {
+			
+			@Override
+			public List<String> getGroupsForUser(String userId, List<String> groupIds,
+					List<String> allExistingGroupIds) {
+				return null;
+			}
+			
+			@Override
+			public boolean existsUser(String userId) {
+				return true;
+			}
+			
+			@Override
+			public boolean existsGroup(String groupId) {
+				return true;
+			}
+		});
+		tsession.addTask(task, null);
+		TaskServiceUtil util = new TaskServiceUtil(taskService,  tsession.getTaskPersistenceManager());
 		OperationCommandWorkitemHandler handler = new OperationCommandWorkitemHandler(util);
 		session.getWorkItemManager().registerWorkItemHandler("OperationCommand", handler);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("task", task);
-		ProcessInstance pi = session.startProcess("taskProcess", params);
+		session.startProcess("taskProcess", params);
 		
 		UserTaskEvent te = new UserTaskEvent();
-		te.setUserId("darth");
+		te.setUserId("Darth Vader");
 		te.setData(null);
+		session.signalEvent("ClaimTaskEvent", te);
+		
+		Assert.assertTrue(tsession.getTask(task.getId()).getTaskData().getStatus().equals(Status.Reserved));
+		
+		params = new HashMap<String, Object>();
+		params.put("task", task);
+		session.startProcess("taskProcess", params);
 		session.signalEvent("StartTaskEvent", te);
+		
+		Assert.assertTrue(tsession.getTask(task.getId()).getTaskData().getStatus().equals(Status.InProgress));
 	}
 
 	public static Object eval(Reader reader, Map vars) {

@@ -1,0 +1,20 @@
+Listening for transport dt_socket at address: 4000
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Getting Started with Spring on JBoss 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 0.807s
+[INFO] Finished at: Mon Jul 02 11:46:47 ART 2012
+[INFO] Final Memory: 8M/490M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project gsoc-human-task: Could not resolve dependencies for project com.wordpress.demian:gsoc-human-task:jar:1.0-SNAPSHOT: Failed to collect dependencies for [com.h2database:h2:jar:1.2.124 (compile), commons-logging:commons-logging:jar:1.1.1 (compile), org.jbpm:jbpm-flow:jar:5.4.0-SNAPSHOT (compile), org.jbpm:jbpm-flow-builder:jar:5.4.0-SNAPSHOT (compile), org.jbpm:jbpm-bpmn2:jar:5.4.0-SNAPSHOT (compile), org.jbpm:jbpm-human-task-core:jar:5.4.0-SNAPSHOT (compile), org.jbpm:jbpm-persistence-jpa:jar:5.4.0-SNAPSHOT (compile), org.jbpm:jbpm-bam:jar:5.4.0-SNAPSHOT (compile), org.hibernate:hibernate-annotations:jar:3.4.0.GA (compile), commons-io:commons-io:jar:2.3 (compile)]: Failed to read artifact descriptor for org.jbpm:jbpm-human-task-core:jar:5.4.0-SNAPSHOT: Could not find artifact org.jbpm:jbpm-human-task:pom:5.4.0-SNAPSHOT -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException

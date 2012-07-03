@@ -91,24 +91,4 @@ public class OperationCommandWorkitemHandler implements WorkItemHandler {
 
 	}
 
-	public static class UserTaskEvent {
-		private String userId;
-		private ContentData data;
-
-		public String getUserId() {
-			return userId;
-		}
-
-		public void setUserId(String userId) {
-			this.userId = userId;
-		}
-
-		public ContentData getData() {
-			return data;
-		}
-
-		public void setData(ContentData data) {
-			this.data = data;
-		}
-	}
 }

@@ -78,9 +78,7 @@ public class OperationCommandWorkitemHandler implements WorkItemHandler {
 		command.setSkippable(skippable);
 		command.setStatus(status);
 		command.setUserIsExplicitPotentialOwner(userIsExplicitPotentialOwner);
-		List<OperationCommand> commands = new ArrayList<OperationCommand>();
-		commands.add(command);
-		this.session.taskOperation(commands, command.getExec(), task.getId(),
+		this.session.taskOperation(command, command.getExec(), task.getId(),
 				taskEvent.getUserId(), taskEvent.getUserId(), taskEvent.getData(), null);
 		wim.completeWorkItem(wi.getId(), null);
 	}

@@ -1,4 +1,4 @@
-package com.wordpress.demian.persisted;
+package com.wordpress.demian;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -35,8 +35,6 @@ import com.wordpress.demian.task.OperationCommandWorkitemHandler;
 import com.wordpress.demian.task.TaskServiceUtil;
 
 public class BaseTest {
-
-	protected StatefulKnowledgeSession session;
 	
 	protected Task task;
 	
@@ -45,50 +43,6 @@ public class BaseTest {
 	protected Map<String, User> users;
 	
 	protected Map<String, Group> groups;
-
-	@Before
-	public void setUp() throws Exception {
-		Map vars = new HashMap();
-		users = fillUsersOrGroups("src/main/resources/LoadUsers.mvel");
-		groups = fillUsersOrGroups("src/main/resources/LoadGroups.mvel");
-		vars.put("users", users);
-		vars.put("groups", groups);
-		vars.put("now", new Date());
-
-		String str = "(with (new Task()) { priority = 55, taskData = (with( new TaskData()) { status = Status.Ready } ), ";
-		str += "peopleAssignments = (with ( new PeopleAssignments() ) { potentialOwners = [users['bobba' ], users['darth'] ], businessAdministrators = [users['Administrator' ], users['darth'] ]}),";
-		str += "names = [ new I18NText( 'en-UK', 'This is my task name')] })";
-
-		task = (Task) eval(new StringReader(str), vars);
-		EntityManagerFactory emfTask = Persistence.createEntityManagerFactory("org.jbpm.task");
-		TaskService taskService = new TaskService(emfTask,
-				SystemEventListenerFactory.getSystemEventListener());
-		tsession = taskService.createSession();
-		UserGroupCallbackManager.getInstance().setCallback(new UserGroupCallback() {
-			
-			@Override
-			public List<String> getGroupsForUser(String userId, List<String> groupIds,
-					List<String> allExistingGroupIds) {
-				return null;
-			}
-			
-			@Override
-			public boolean existsUser(String userId) {
-				return true;
-			}
-			
-			@Override
-			public boolean existsGroup(String groupId) {
-				return true;
-			}
-		});
-		tsession.addTask(task, null);
-		TaskServiceUtil util = new TaskServiceUtil(taskService,  tsession.getTaskPersistenceManager());
-		OperationCommandWorkitemHandler handler = new OperationCommandWorkitemHandler(util);
-		session = this.createKnowledgeBase()
-				.newStatefulKnowledgeSession();
-		session.getWorkItemManager().registerWorkItemHandler("OperationCommand", handler);
-	}
 	
 	public static Object eval(Reader reader, Map vars) {
 		vars.put("now", new Date());
@@ -112,7 +66,7 @@ public class BaseTest {
 		return result;
 	}
 
-	private KnowledgeBase createKnowledgeBase() {
+	protected KnowledgeBase createKnowledgeBase() {
 		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
 				.newKnowledgeBuilder();
 
